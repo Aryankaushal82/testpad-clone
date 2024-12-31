@@ -120,73 +120,75 @@ const QuestionPage = () => {
   };
 
   return (
-    <>
+    <div className="max-h-screen  ">
       <Navbar
         totalQuestions={questions.length}
         attemptedQuestions={Object.keys(questionStatus).length}
         onSubmitExam={handleSubmitExam}
       />
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 pt-20 px-4 ">
-        <div className="container rounded-lg  pb-2 mx-auto grid grid-cols-1 md:grid-cols-10 gap-6 h-[calc(100vh-5rem)]">
+      {/* */}
+      <div className="h-[calc(100vh-5rem)] mt-16 grid grid-cols-12 grid-rows-12 ">
           {/* Question Navigation Sidebar */}
-          <div className=" min-h-full overflow-y-hidden">
-            <div className="grid grid-cols-10 md:grid-cols-1 gap-2 bg-white dark:bg-gray-800 rounded-lg shadow-md px-4 w-full h-[50%] md:min-h-screen md:w-auto transform-translate-x-[-50%] overflow-x-scroll overflow-y-hidden md:overflow-x-hidden md:h-screen md:overflow-y-scroll [&::-webkit-scrollbar]:w-2
+          <div className=" grid row-start-1 row-end-2 col-start-1 col-end-13 md:col-start-1 md:col-end-2 md:row-start-1 md:row-end-13   overflow-x-scroll md:overflow-x-hidden md:overflow-y-scroll [&::-webkit-scrollbar]:w-2
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-gray-100
   [&::-webkit-scrollbar-thumb]:rounded-full
   [&::-webkit-scrollbar-thumb]:bg-gray-300
   dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 ">
-              <div className=" flex flex-row  items-center justify-start gap-3 md:flex-col md:items-center md:justify-start">
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+            <div
+              className="grid grid-cols-12 md:grid-cols-1 gap-2  rounded-lg shadow-md px-4 w-full h-[50%] md:min-h-screen md:w-auto transform-translate-x-[-50%]    "
+            >
+              <div className=" flex flex-row  items-center justify-start gap-3 md:flex-col md:items-center md:justify-start ">
                 {questions.map((q, index) => (
                   <button
                     key={q.id}
                     onClick={() => navigate(`/exam/${testId}/question/${q.id}`)}
                     className={`
                        w-10 h-10 rounded-full flex items-center justify-center p-[16px]
-                      ${currentQuestion.id === q.id 
-                        ? 'bg-blue-500 text-white' 
-                        : 'bg-gray-200 dark:bg-gray-700 text-gray-600'}
-                      ${questionStatus[q.id] === 'attempted' 
-                        ? 'bg-green-500 text-white' 
-                        : questionStatus[q.id] === 'reviewed' 
-                        ? 'bg-yellow-500 text-white' 
-                        : ''}
+                      ${
+                        currentQuestion.id === q.id
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-200 dark:bg-gray-700 text-gray-600"
+                      }
+                      ${
+                        questionStatus[q.id] === "attempted"
+                          ? "bg-green-500 text-white"
+                          : questionStatus[q.id] === "reviewed"
+                          ? "bg-yellow-500 text-white"
+                          : ""
+                      }
                     `}
                   >
                     {index + 1}
                   </button>
                 ))}
               </div>
-            </div> 
+            </div>
           </div>
 
           {/* Main Question Area */}
-          <div className="grid grid-cols-1 md:col-start-2 md:col-end-11 h-full">
+          <div className="grid col-start-1 col-end-13 row-start-2 row-end-13 md:col-start-2 md:col-end-13 md:row-start-1 md:row-end-13 h-full w-full   ">
             <motion.div
               key={currentQuestion.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 h-full flex flex-col"
+              className=" shadow-md p-6 min-h-full flex flex-col md:flex-row gap-2  "
             >
               {/* Question Header */}
-              <div className="flex justify-between items-center mb-6">
+              <div className="flex  flex-col w-[60%]  p-4 h-full overflow-y-scroll ">
                 <h2 className="text-xl font-bold dark:text-white">
                   Question {currentQuestionIndex + 1} of {questions.length}
                 </h2>
-                {/* <div className="flex items-center space-x-2">
-                  <span className="text-gray-600 dark:text-gray-300">
-                    Time Remaining: {formatTime(timeRemaining)}
-                  </span>
-                </div> */}
+                <p className="text-wrap break-all whitespace-normal text-lg mb-6 dark:text-gray-200">
+                  {currentQuestion.text}
+                </p>
               </div>
 
               {/* Question Content */}
-              <div className="flex-grow">
-                <p className="text-lg mb-6 dark:text-gray-200">
-                  {currentQuestion.text}
-                </p>
+              <div className="flex-grow  w-[40%]  p-4">
+                
 
                 {/* Options */}
                 <div className="space-y-4">
@@ -195,7 +197,7 @@ const QuestionPage = () => {
                       key={index}
                       whileHover={{ scale: 1.02 }}
                       className={`
-                        p-4 border rounded-lg cursor-pointer transition
+                        p-3 border rounded-lg cursor-pointer transition
                         ${
                           selectedAnswers[currentQuestion.id] === option
                             ? "bg-blue-100 dark:bg-blue-900 border-blue-500"
@@ -222,7 +224,7 @@ const QuestionPage = () => {
               </div>
 
               {/* Navigation and Submit Buttons */}
-              <div className="mt-6 flex justify-between">
+              {/* <div className="mt-6 flex justify-between">
                 {currentQuestionIndex > 0 && (
                   <button
                     onClick={handlePreviousQuestion}
@@ -254,10 +256,10 @@ const QuestionPage = () => {
                     Submit Exam
                   </button>
                 )}
-              </div>
+              </div> */}
 
               {/* Submit and Review Buttons */}
-              <div className="mt-4 flex justify-center space-x-4">
+              {/* <div className="mt-4 flex justify-center space-x-4">
                 <button
                   onClick={() => handleSubmitAnswer("attempted")}
                   className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
@@ -270,12 +272,12 @@ const QuestionPage = () => {
                 >
                   Mark for Review
                 </button>
-              </div>
+              </div> */}
             </motion.div>
           </div>
-        </div>
+
       </div>
-    </>
+    </div>
   );
 };
 
